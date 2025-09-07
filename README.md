@@ -1,5 +1,5 @@
 
-# MiniVSFS File System Tools
+# MiniVSFS File System 
 
 This project provides two C utilities for working with the MiniVSFS (Mini Virtual Simple File System) disk image format:
 
@@ -12,41 +12,39 @@ Both tools are designed for educational purposes and demonstrate low-level file 
 
 ## 1. mkfs_builder.c
 
-### Purpose
-Creates a new MiniVSFS disk image, initializing all metadata, bitmaps, inode table, and a root directory.
 
 ### Build
 ```sh
-gcc -O2 -std=c17 -Wall -Wextra mkfs_builder.c -o mkfs_builder
+# Compile (use a recent GCC/Clang; code targets C11+)
+- `--size-kib`: Size of the image in KiB (must be a multiple of 4, between 180 and 4096).
+- `--inodes`: Number of inodes (between 128 and 512).
 ```
 
-### Usage
+### Usage Example
 ```sh
-./mkfs_builder --image out.img --size-kib <180..4096> --inodes <128..512> [--seed N]
+# Create a fresh FS image (e.g., 512 KiB, 128 inodes)
+- `--seed N`: (Optional) Random seed for reproducibility.
+
+# Add a text file from your current directory
+
+---
+
+# Sanity check: magic 'MVSF' at block0, two dirents in root + one new
+
 ```
 
+#### mkfs_builder options
 - `--image out.img`: Path to the output image file.
 - `--size-kib`: Size of the image in KiB (must be a multiple of 4, between 180 and 4096).
 - `--inodes`: Number of inodes (between 128 and 512).
 - `--seed N`: (Optional) Random seed for reproducibility.
-
----
-
 ## 2. mkfs_adder.c
 
 ### Purpose
 Adds a file from the host system into an existing MiniVSFS disk image, updating all relevant metadata and directory entries.
 
-### Build
-```sh
-gcc -O2 -std=c17 -Wall -Wextra mkfs_adder.c -o mkfs_adder
-```
 
-### Usage
-```sh
-./mkfs_adder --input in.img --output out.img --file <path>
-```
-
+#### mkfs_adder options
 - `--input in.img`: Path to the input MiniVSFS image file.
 - `--output out.img`: Path to the output MiniVSFS image file (with the new file added).
 - `--file <path>`: Path to the file on the host system to add to the image.
