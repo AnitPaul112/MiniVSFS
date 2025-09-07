@@ -65,5 +65,4 @@ Adds a file from the host system into an existing MiniVSFS disk image, updating 
 ## Error Handling
 Both programs print errors to `stderr` and exit with a non-zero code if any operation fails (e.g., out of memory, no free inode, file too large, etc.).
 
-## License
-This project is for educational use. See your course or assignment guidelines for permitted usage.
+
